@@ -1,3 +1,5 @@
 venv/
 .env
 pass.txt
+Constants.py
+__pycache__
