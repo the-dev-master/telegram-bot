@@ -10,13 +10,16 @@ print("bot started....")
 
 def start_command(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Type something random to get started!")
+# def start_command(update, context):
+#     update.message.reply_text("Welcome to my awesome bot!")
 
 def help_command(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="google it")
 
 def handle_message(update: Update, context: CallbackContext):
     text = str(update.message.text).lower()
-    response = R.sample_responses(text)
+    user_name = update.message.chat.first_name
+    response = R.sample_responses(text , user_name)
     context.bot.send_message(chat_id=update.effective_chat.id, text=response)
 
 def help_command(update: Update, context: CallbackContext):
@@ -26,6 +29,9 @@ def help_command(update: Update, context: CallbackContext):
 def caps_command(update: Update, context: CallbackContext):
     text_caps = ' '.join(context.args).upper()
     context.bot.send_message(chat_id=update.effective_chat.id, text=text_caps)
+
+def error(update: Update, context: CallbackContext):
+    print(f'Update {update} caused error {context.error}')
 
 # inline caps
 
@@ -63,7 +69,7 @@ def main():
     dp.add_handler(echo_handler)
     inline_caps_handler = InlineQueryHandler(inline_caps)
     dp.add_handler(inline_caps_handler)
-
+    dp.add_error_handler(error)
 
     # Start the Bot
     updater.start_polling()
