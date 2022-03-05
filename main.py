@@ -19,6 +19,8 @@ def handle_message(update: Update, context: CallbackContext):
     response = R.sample_responses(text)
     context.bot.send_message(chat_id=update.effective_chat.id, text=response)
 
+def help_command(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="google it")
 # return all in caps
 
 def caps_command(update: Update, context: CallbackContext):
